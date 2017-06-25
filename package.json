@@ -1,6 +1,6 @@
 {
   "name": "ng2-fileupload",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Ng2 FileUpload Component",
   "main": "index.js",
   "scripts": {

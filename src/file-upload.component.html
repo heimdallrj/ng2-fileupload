@@ -4,5 +4,13 @@
     (dragenter)="onDragEnter($event)"
     (dragover)="onDragOver($event)"
     (drop)="onDrop($event)"
-  ></div>
+  >
+      <input
+        #fileUploadInput
+        name="fileUploadInput"
+        type="file"
+        class="ng2fup-file-input"
+        (change)="onSelectFiles($event)"
+      />
+  </div>
 </div>

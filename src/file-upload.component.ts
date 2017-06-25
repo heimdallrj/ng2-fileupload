@@ -35,6 +35,19 @@ export class FileUpload {
     this.status = evt.type;
   }
 
+  onSelectFiles(evt: any) {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    console.log(evt);
+
+    // Fetch files
+    const files = evt.target.files;
+    console.log(files);
+
+    this.uploadFiles(files);
+  }
+
   onDrop(evt: any) {
     evt.preventDefault();
     evt.stopPropagation();
@@ -45,6 +58,10 @@ export class FileUpload {
     const files = evt.dataTransfer.files;
     console.log(files);
 
+    this.uploadFiles(files);
+  }
+
+  uploadFiles(files: any) {
     const data = {
       error: null,
       files: files
