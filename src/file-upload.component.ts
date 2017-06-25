@@ -10,6 +10,7 @@ export class FileUpload {
   status: string;
 
   @Input() allowedTypes: any;
+  @Input() allowedSize: number; // MB
 
   @Output() onUploadFiles = new EventEmitter<any>();
 
@@ -39,7 +40,7 @@ export class FileUpload {
     evt.preventDefault();
     evt.stopPropagation();
 
-    console.log(evt);
+    this.status = evt.type;
 
     // Fetch files
     const files = evt.target.files;
@@ -62,6 +63,9 @@ export class FileUpload {
   }
 
   uploadFiles(files: any) {
+    let error = false;
+    const errorMessages = [];
+
     const data = {
       error: null,
       files: files
@@ -73,12 +77,23 @@ export class FileUpload {
         const file = files[i];
 
         if (!this.allowedTypes.includes(file.type)) {
-          data.error = {
-            message: 'Invalid file type(s)'
-          };
-          data.files = null
+          error = true;
+          errorMessages.push('Invalid file type(s)');
+        }
+
+        // Validate fileSize
+        if (this.allowedSize && this.allowedSize > 0) {
+          if ((file.size) / 1048576 > this.allowedSize) {
+            error = true;
+            errorMessages.push('Invalid file size(s)');
+          }
         }
       }
+    }
+
+    if (error) {
+      data.error = errorMessages;
+      data.files = null;
     }
 
     this.onUploadFiles.emit(data);
