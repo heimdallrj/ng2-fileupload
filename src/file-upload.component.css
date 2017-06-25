@@ -1,0 +1,16 @@
+h1 {
+    color: red;
+}
+
+.ng2fup-container {}
+
+.ng2fup-dropzone {
+  border: 2px dashed #ccc;
+  text-align: center;
+  padding: 50px;
+}
+
+.ng2fup-ready {};
+.ng2fup-dragenter { background-color: #eee; }
+.ng2fup-dragover { background-color: #f5f5f5; }
+.ng2fup-drop { background-color: #ccc; }
