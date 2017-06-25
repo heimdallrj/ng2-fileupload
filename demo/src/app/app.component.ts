@@ -7,7 +7,14 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  onUploadFiles(files: any) {
-    console.log('onUploadFiles: ', files);
+  allowedTypes: any;
+
+  constructor() {
+    // this.allowedTypes = [ 'text/markdown' ];
+    this.allowedTypes = [];
+  }
+
+  onUploadFiles(data: any) {
+    console.log('$: ', data);
   }
 }

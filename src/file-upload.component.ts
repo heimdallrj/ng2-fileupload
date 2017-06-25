@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'file-upload',
@@ -9,13 +9,17 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class FileUpload {
   status: string;
 
+  @Input() allowedTypes: any;
+
   @Output() onUploadFiles = new EventEmitter<any>();
 
   constructor() {
     this.reset();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.allowedTypes = (this.allowedTypes && Array.isArray(this.allowedTypes)) ? this.allowedTypes : [];
+  }
 
   onDragEnter(evt: any) {
     evt.preventDefault();
@@ -37,11 +41,30 @@ export class FileUpload {
 
     this.status = evt.type;
 
-    // fetch files
+    // Fetch files
     const files = evt.dataTransfer.files;
     console.log(files);
 
-    this.onUploadFiles.emit(files);
+    const data = {
+      error: null,
+      files: files
+    };
+
+    // Validate file type
+    if (this.allowedTypes.length > 0) {
+      for (let i=0; i<files.length; i++) {
+        const file = files[i];
+
+        if (!this.allowedTypes.includes(file.type)) {
+          data.error = {
+            message: 'Invalid file type(s)'
+          };
+          data.files = null
+        }
+      }
+    }
+
+    this.onUploadFiles.emit(data);
     this.reset();
   }
 
